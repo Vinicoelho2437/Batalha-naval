@@ -1,8 +1,11 @@
+console.log("Funcionando");
+
 const board = document.getElementById("tabuleiro");
 const cells = board.getElementsByTagName("td");
 const lines =  board.getElementsByTagName("tr").length;
 const cols = cells.length / lines;
-const shipSize = 3;
+//const shipSize = 3;
+const shipSizes = [5,3,3,2,1];
 const shipLocations = createShip();
 let hitTarget = 0;
 
@@ -19,17 +22,23 @@ function generateRandom(max) {
 }
 
 function createShip() {
+  ships = [];
 
-  let line = generateRandom(lines);
-  let col = generateRandom(cols - shipSize);
-  ship = [];
-
-  for (i = 0; i < shipSize; i++) {
-    ship[i] = [line, col+i]
+  for (i = 0; i<shipSizes.length; i++) {
+    let shipSize = shipSizes[i];
+    let line = generateRandom(lines);
+    let col = generateRandom(cols - shipSize);
+    ship = [];
+  
+    for (j = 0; j < shipSize; j++) {
+      ship[j] = [line, col+j]
+    }
+  
+    ships[i] = ship;
   }
 
-  console.log(ship);
-  return ship;
+  console.log(ships);
+  return ships;
 }
 
 function cellClick() {
@@ -38,7 +47,7 @@ function cellClick() {
   console.log(row + " x " + col);
 
   if (checkForHit(row, col) == true) {
-    this.style.backgroundColor = 'black'
+    this.style.backgroundColor = 'red'
     checkForWin();
   }else{
     this.style.backgroundColor = 'gray'
@@ -49,10 +58,17 @@ function cellClick() {
 function checkForHit(row,col) {
   for(let i=0; i<shipLocations.length; i++) {
     console.log(shipLocations[i]);
-    if (shipLocations[i][0] == row && shipLocations[i][1] == col ) {
-      hitTarget++;
-      shipLocations.splice(i,1);
-      return true;
+    for (let j=0; j<shipLocations[i].length; j++) {
+      console.log(shipLocations[i]);
+      if (shipLocations[i][j][0] == row && shipLocations[i][j][1] == col ) {
+        hitTarget++;
+        shipLocations[i].splice(j,1);
+
+        if (!shipLocations[i].length) {
+          shipLocations.splice(i,1);
+        }
+        return true;
+     }
     }
   }
 
@@ -62,6 +78,6 @@ function checkForHit(row,col) {
 function checkForWin() {
   if(shipLocations.length == 0) {
     alert("Paranbéns!!! Você ganhou");
-    location.reload();
+    Locations.reloade()
   }
 }
