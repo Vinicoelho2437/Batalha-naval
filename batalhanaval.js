@@ -60,15 +60,16 @@ function checkCollision(ship1, ship2) {
   return false;
 }
 
+
 function cellClick() {
   const row = this.parentNode.rowIndex;
   const col = this.cellIndex;
 
   if (checkForHit(row, col)) {
-    this.style.backgroundColor = 'red'
+    this.style.backgroundColor = 'black'
     checkForWin();
   } else {
-    this.style.backgroundColor = 'gray'
+    this.style.backgroundColor = 'aqua'
   }
   this.removeEventListener('click', cellClick);
 }
