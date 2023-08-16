@@ -66,10 +66,12 @@ function cellClick() {
   const col = this.cellIndex;
 
   if (checkForHit(row, col)) {
-    this.style.backgroundColor = 'black'
+    this.style.backgroundColor = 'black'; /*cor do tiro*/
+    this.style.border = '1px solid black'; /*borda do tiro*/
     checkForWin();
   } else {
-    this.style.backgroundColor = 'aqua'
+    this.style.backgroundColor = '#191970' /*cor da agua*/
+    this.style.border = '1px solid #191970'; /* deixa a borda do celula pintada da msm cor que ela */
   }
   this.removeEventListener('click', cellClick);
 }
